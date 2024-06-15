@@ -8,10 +8,13 @@ let computerScore = 0
 function getComputerChoice() {
     let comp_choice = Math.floor(Math.random()*3)+1
     if (comp_choice===1) {
+        console.log("rock")
         return "rock"
     } else if (comp_choice===2) {
+        console.log("paper")
         return "paper"
     } else {
+        console.log("scissors")
         return "scissors"
     }
 }
@@ -77,4 +80,43 @@ function playRound(a,b) {
     }
 }
 
-playRound(getComputerChoice(),getHumanChoice())
+function earlyWinCheck () {
+    if (computerScore===3){
+        console.log("You lost the game")
+    } else if (humanScore===3){
+        console.log("You won the game")
+    }
+}
+function playGame() {
+    console.log("Round-1: Fight!")
+    playRound(getComputerChoice(),getHumanChoice())
+    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+
+    console.log("Round-2: Fight!")
+    playRound(getComputerChoice(),getHumanChoice())
+    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+
+    console.log("Round-3: Fight!")
+    playRound(getComputerChoice(),getHumanChoice())
+    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    earlyWinCheck() // a chance that game might be finished by round - 3
+
+    console.log("Round-4: Fight!")
+    playRound(getComputerChoice(),getHumanChoice())
+    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    earlyWinCheck() // a chance that game might be finished by round - 4
+    
+    console.log("Round-5: Fight!")
+    playRound(getComputerChoice(),getHumanChoice())
+    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+
+    if(humanScore > computerScore) {
+        console.log("You won the game!")
+    } else if (humanScore < computerScore) {
+        console.log("You lost the game")
+    } else {
+        console.log("Game draw!")
+    }
+}
+
+playGame()
