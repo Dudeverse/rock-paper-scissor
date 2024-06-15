@@ -41,7 +41,7 @@ function playRound(a,b) {
     b = b.toLowerCase()
     
 
-    // if a is rock, b is rock
+    // if a and b are same, match draw
     // match draw
     if (a===b) {
         console.log("Match draw!")
@@ -118,7 +118,7 @@ function playGame() {
     
     // a chance that game might be finished by round - 3
     if (earlyWinCheck()) {
-        return
+        return 
     } 
 
     console.log("Round-4: Fight!")
@@ -133,6 +133,8 @@ function playGame() {
     playRound(getComputerChoice(),getHumanChoice())
     console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
+
+    // tally scores and declare result
     if(humanScore > computerScore) {
         console.log("You won the game!")
     } else if (humanScore < computerScore) {
