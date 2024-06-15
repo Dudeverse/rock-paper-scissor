@@ -44,6 +44,7 @@ function playRound(a,b) {
     // if a and b are same, match draw
     // match draw
     if (a===b) {
+        alert("Match draw!")
         console.log("Match draw!")
     }
     
@@ -91,11 +92,11 @@ function earlyWinCheck () {
 
     if (computerScore===3){ // if computer scores 3 first
         isEarlyWin=true;
-        console.log("You lost the game")
+        alert("You lost the game")
         return isEarlyWin;
     } else if (humanScore===3){ // if human scores 3 first
         isEarlyWin=true;
-        console.log("You won the game")
+        alert("You won the game")
         return isEarlyWin;
     } else {
         isEarlyWin=false;
@@ -106,15 +107,15 @@ function earlyWinCheck () {
 function playGame() {
     console.log("Round-1: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
     console.log("Round-2: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
     console.log("Round-3: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
     
     // a chance that game might be finished by round - 3
     if (earlyWinCheck()) {
@@ -123,7 +124,7 @@ function playGame() {
 
     console.log("Round-4: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
     // a chance that game might be finished by round - 4
     if (earlyWinCheck()) {
         return
@@ -131,16 +132,16 @@ function playGame() {
     
     console.log("Round-5: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
 
     // tally scores and declare result
     if(humanScore > computerScore) {
-        console.log("You won the game!")
+        alert("You won the game!")
     } else if (humanScore < computerScore) {
-        console.log("You lost the game")
+        alert("You lost the game")
     } else {
-        console.log("Game draw!")
+        alert("Game draw!")
     }
 }
 
