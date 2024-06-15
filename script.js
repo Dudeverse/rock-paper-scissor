@@ -1,4 +1,4 @@
-console.log("Hello Let's play rock paper scissors!")
+console.log("---------------------Hello Let's play rock paper scissors!--------------------------")
 
 let humanScore = 0
 let computerScore = 0
@@ -8,13 +8,13 @@ let computerScore = 0
 function getComputerChoice() {
     let comp_choice = Math.floor(Math.random()*3)+1
     if (comp_choice===1) {
-        console.log("rock")
+        // console.log("rock") // for testing early wins 
         return "rock"
     } else if (comp_choice===2) {
-        console.log("paper")
+        // console.log("paper")// for testing early wins 
         return "paper"
     } else {
-        console.log("scissors")
+        // console.log("scissors")// for testing early wins 
         return "scissors"
     }
 }
@@ -23,16 +23,22 @@ function getComputerChoice() {
 
 function getHumanChoice() {
     let human_choice = prompt("Rock, paper, or scissors?: ")
-    return(human_choice)
+    hc = human_choice.toLowerCase();
+
+    //check to see if human entered the word correctly, else prompt again.
+    if (hc==="rock"|| hc==="paper"||hc==="scissors") {
+        return human_choice;
+    } else {
+        return getHumanChoice()
+    }
+    
 }
 
 function playRound(a,b) {
     // a will be computer choice
     a = a.toLowerCase()
-    console.log(a)
     // b will be human choice
     b = b.toLowerCase()
-    console.log(b)
     
 
     // if a is rock, b is rock
@@ -81,34 +87,51 @@ function playRound(a,b) {
 }
 
 function earlyWinCheck () {
-    if (computerScore===3){
+    let isEarlyWin=false;
+
+    if (computerScore===3){ // if computer scores 3 first
+        isEarlyWin=true;
         console.log("You lost the game")
-    } else if (humanScore===3){
+        return isEarlyWin;
+    } else if (humanScore===3){ // if human scores 3 first
+        isEarlyWin=true;
         console.log("You won the game")
+        return isEarlyWin;
+    } else {
+        isEarlyWin=false;
+        return isEarlyWin;
     }
 }
+
 function playGame() {
     console.log("Round-1: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
     console.log("Round-2: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
     console.log("Round-3: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
-    earlyWinCheck() // a chance that game might be finished by round - 3
+    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    
+    // a chance that game might be finished by round - 3
+    if (earlyWinCheck()) {
+        return
+    } 
 
     console.log("Round-4: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
-    earlyWinCheck() // a chance that game might be finished by round - 4
+    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    // a chance that game might be finished by round - 4
+    if (earlyWinCheck()) {
+        return
+    } 
     
     console.log("Round-5: Fight!")
     playRound(getComputerChoice(),getHumanChoice())
-    console.log("Score so far: Computer: " + computerScore+ " You: " + humanScore)
+    console.log("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
 
     if(humanScore > computerScore) {
         console.log("You won the game!")
