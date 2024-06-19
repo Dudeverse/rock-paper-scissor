@@ -2,6 +2,29 @@ console.log("---------------------Hello Let's play rock paper scissors!---------
 
 let humanScore = 0
 let computerScore = 0
+let beat = new Audio('sounds/lose.mp3');
+let winbeat = new Audio('sounds/win.mp3');
+let drawbeat = new Audio('sounds/draw.mp3');
+let gamewin = new Audio('sounds/goodjob.mp3');
+
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+const resultDiv = document.querySelector("#score");
+const human = document.querySelector("#humanscore");
+const computer= document.querySelector("#compscore");
+const resetBtn = document.querySelector("#reset");
+const compRock = document.querySelector("#comp-rock");
+const compPaper = document.querySelector("#comp-paper");
+const compScissors = document.querySelector("#comp-scissors");
+
+resultDiv.textContent="Begin"
+resultDiv.style.padding="20px"
+
+human.textContent = "Your score: " + humanScore;
+human.style.padding = "20px"
+computer.textContent = "Computer score: " + computerScore;
+computer.style.padding = "20px"
 
 
 
@@ -9,140 +32,145 @@ function getComputerChoice() {
     let comp_choice = Math.floor(Math.random()*3)+1
     if (comp_choice===1) {
         // console.log("rock") // for testing early wins 
+        compRock.style.border = "10px solid green";
+        compPaper.style.border = "5px solid black";
+        compScissors.style.border = "5px solid black";
+        
         return "rock"
     } else if (comp_choice===2) {
         // console.log("paper")// for testing early wins 
+        compRock.style.border = "5px solid black";
+        compPaper.style.border = "10px solid green";
+        compScissors.style.border = "5px solid black";
         return "paper"
     } else {
         // console.log("scissors")// for testing early wins 
+        compRock.style.border = "5px solid black";
+        compPaper.style.border = "5px solid black";
+        compScissors.style.border = "10px solid green";
+        
         return "scissors"
     }
 }
 
-
-
-function getHumanChoice() {
-    let human_choice = prompt("Rock, paper, or scissors?: ")
-    hc = human_choice.toLowerCase();
-
-    //check to see if human entered the word correctly, else prompt again.
-    if (hc==="rock"|| hc==="paper"||hc==="scissors") {
-        return human_choice;
-    } else {
-        return getHumanChoice()
-    }
-    
-}
-
-function playRound(a,b) {
+function playRound(b,a) {
     // a will be computer choice
     a = a.toLowerCase()
     // b will be human choice
     b = b.toLowerCase()
-    
 
     // if a and b are same, match draw
     // match draw
     if (a===b) {
-        alert("Match draw!")
-        console.log("Match draw!")
+        // alert("Match draw!")
+        resultDiv.textContent =  "Match draw!";
+        drawbeat.play();
+        tallyScore()
     }
     
     // if a is rock, b is paper
     // a loses, b wins, you win
     else if (a==="rock"&&b==="paper"){
         humanScore++;
-        console.log("You win! Paper beats rock!")
+        resultDiv.textContent =  "You win! Paper beats rock!";
+        winbeat.play();
+        tallyScore()
     }    
     // if a is rock, b is scissors
     // a wins, you lose
     else if (a==="rock"&&b=="scissors") {
         computerScore++;
-        console.log("You lose! Rock beats scissors!")
+        resultDiv.textContent =  "You lose! Rock beats scissors!";
+        beat.play();
+        tallyScore()
 
     }
     // if a is paper, b is rock
     // a wins, you lose
     else if (a==="paper"&&b=="rock") {
         computerScore++;
-        console.log("You lose! Paper beats rock!")
+        resultDiv.textContent =  "You lose! Paper beats rock!";
+        beat.play();
+        tallyScore()
+
     }
     // if a is paper, b is scissors
     // b wins, you win
     else if (a==="paper"&&b=="scissors") {
         humanScore++;
-        console.log("You win! Scissors beats paper!")
+        resultDiv.textContent =  "You win! Scissors beats paper!";
+        winbeat.play();
+        tallyScore()
+
     }
     // if a is scissors, b is rock
     // b wins, you win
     else if (a==="scissors"&&b=="rock") {
         humanScore++;
-        console.log("You win! Rock beats scissors!")
+        resultDiv.textContent =  "You win! Rock beats scissors!";
+        winbeat.play();
+        tallyScore()
+
     }
     // if a is scissors, b is paper
     // a wins, you lose
     else if (a==="scissors"&&b=="paper") {
         computerScore++;
-        console.log("You lose! Scissors beats paper")
+        resultDiv.textContent =  "You lose! Scissors beats paper";
+        beat.play();
+        tallyScore()
     }
 }
 
-function earlyWinCheck () {
-    let isEarlyWin=false;
+function tallyScore() {
+    human.textContent = "Your score: " + humanScore;
+    computer.textContent = "Computer score: " + computerScore;
 
-    if (computerScore===3){ // if computer scores 3 first
-        isEarlyWin=true;
-        alert("You lost the game")
-        return isEarlyWin;
-    } else if (humanScore===3){ // if human scores 3 first
-        isEarlyWin=true;
-        alert("You won the game")
-        return isEarlyWin;
-    } else {
-        isEarlyWin=false;
-        return isEarlyWin;
+    if (humanScore===5) {
+        resultDiv.textContent = "Game Over. You win!"
+        disableButtons();
+        gamewin.play();
+    } else if (computerScore===5) {
+        resultDiv.textContent = "Game Over. Computer wins!"
+        disableButtons();
     }
 }
 
-function playGame() {
-    console.log("Round-1: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+function resetGame() {
+    resultDiv.textContent = "Begin";
+    humanScore = 0;
+    computerScore =0;
+    human.textContent = "Your score: " + humanScore;
+    computer.textContent = "Computer score: " + computerScore;
+    paperBtn.disabled = false;
+    rockBtn.disabled =false;
+    scissorsBtn.disabled = false;
+    compRock.style.border = "5px solid black";
+    compPaper.style.border = "5px solid black";
+    compScissors.style.border = "5px solid black";
+}
 
-    console.log("Round-2: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+function disableButtons() {
+    paperBtn.disabled = true;
+    rockBtn.disabled =true;
+    scissorsBtn.disabled = true;
+}
 
-    console.log("Round-3: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
+
+rockBtn.addEventListener('click', selectRock );
+paperBtn.addEventListener('click', selectPaper);
+scissorsBtn.addEventListener('click',selectScissors);
+resetBtn.addEventListener('click',resetGame);
+
+function selectRock() {
+    playRound("rock", getComputerChoice());
+}
     
-    // a chance that game might be finished by round - 3
-    if (earlyWinCheck()) {
-        return 
-    } 
-
-    console.log("Round-4: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
-    // a chance that game might be finished by round - 4
-    if (earlyWinCheck()) {
-        return
-    } 
-    
-    console.log("Round-5: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
-
-
-    // tally scores and declare result
-    if(humanScore > computerScore) {
-        alert("You won the game!")
-    } else if (humanScore < computerScore) {
-        alert("You lost the game")
-    } else {
-        alert("Game draw!")
-    }
+function selectPaper() {
+    playRound("paper", getComputerChoice());
+}
+function selectScissors() {
+    playRound("scissors", getComputerChoice());
 }
 
-playGame()
+
