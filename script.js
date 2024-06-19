@@ -7,9 +7,16 @@ const rockBtn = document.querySelector("#rock");
 const paperBtn = document.querySelector("#paper");
 const scissorsBtn = document.querySelector("#scissors");
 const resultDiv = document.createElement("div");
+const human = document.createElement("div");
+const computer= document.createElement("div");
+
+
 resultDiv.textContent="Begin"
 resultDiv.style.padding="20px"
 document.body.appendChild(resultDiv);
+document.body.appendChild(human);
+document.body.appendChild(computer);
+
 
 
 function getComputerChoice() {
@@ -38,7 +45,7 @@ function playRound(a,b) {
     if (a===b) {
         // alert("Match draw!")
         resultDiv.textContent =  "Match draw!";
-
+        tallyScore()
     }
     
     // if a is rock, b is paper
@@ -46,12 +53,14 @@ function playRound(a,b) {
     else if (a==="rock"&&b==="paper"){
         humanScore++;
         resultDiv.textContent =  "You win! Paper beats rock!";
+        tallyScore()
     }    
     // if a is rock, b is scissors
     // a wins, you lose
     else if (a==="rock"&&b=="scissors") {
         computerScore++;
         resultDiv.textContent =  "You lose! Rock beats scissors!";
+        tallyScore()
 
     }
     // if a is paper, b is rock
@@ -59,26 +68,52 @@ function playRound(a,b) {
     else if (a==="paper"&&b=="rock") {
         computerScore++;
         resultDiv.textContent =  "You lose! Paper beats rock!";
+        tallyScore()
+
     }
     // if a is paper, b is scissors
     // b wins, you win
     else if (a==="paper"&&b=="scissors") {
         humanScore++;
         resultDiv.textContent =  "You win! Scissors beats paper!";
+        tallyScore()
+
     }
     // if a is scissors, b is rock
     // b wins, you win
     else if (a==="scissors"&&b=="rock") {
         humanScore++;
         resultDiv.textContent =  "You win! Rock beats scissors!";
+        tallyScore()
+
     }
     // if a is scissors, b is paper
     // a wins, you lose
     else if (a==="scissors"&&b=="paper") {
         computerScore++;
         resultDiv.textContent =  "You lose! Scissors beats paper";
+        tallyScore()
     }
 }
+
+function tallyScore() {
+    human.textContent = humanScore;
+    computer.textContent = computerScore;
+
+    if (humanScore===5) {
+        resultDiv.textContent = "Game Over. You win! Click any button to continue playing."
+        resetGame()
+    } else if (computerScore===5) {
+        resultDiv.textContent = "Game Over. Computer wins!  Click any button to continue playing."
+        resetGame()
+    }
+}
+
+function resetGame() {
+    humanScore = 0;
+    computerScore =0;
+}
+
 
 
 rockBtn.addEventListener('click', selectRock );
