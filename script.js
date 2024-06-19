@@ -2,6 +2,10 @@ console.log("---------------------Hello Let's play rock paper scissors!---------
 
 let humanScore = 0
 let computerScore = 0
+let beat = new Audio('sounds/lose.mp3');
+let winbeat = new Audio('sounds/win.mp3');
+let drawbeat = new Audio('sounds/draw.mp3');
+let gamewin = new Audio('sounds/goodjob.mp3');
 
 const rockBtn = document.querySelector("#rock");
 const paperBtn = document.querySelector("#paper");
@@ -60,6 +64,7 @@ function playRound(b,a) {
     if (a===b) {
         // alert("Match draw!")
         resultDiv.textContent =  "Match draw!";
+        drawbeat.play();
         tallyScore()
     }
     
@@ -68,6 +73,7 @@ function playRound(b,a) {
     else if (a==="rock"&&b==="paper"){
         humanScore++;
         resultDiv.textContent =  "You win! Paper beats rock!";
+        winbeat.play();
         tallyScore()
     }    
     // if a is rock, b is scissors
@@ -75,6 +81,7 @@ function playRound(b,a) {
     else if (a==="rock"&&b=="scissors") {
         computerScore++;
         resultDiv.textContent =  "You lose! Rock beats scissors!";
+        beat.play();
         tallyScore()
 
     }
@@ -83,6 +90,7 @@ function playRound(b,a) {
     else if (a==="paper"&&b=="rock") {
         computerScore++;
         resultDiv.textContent =  "You lose! Paper beats rock!";
+        beat.play();
         tallyScore()
 
     }
@@ -91,6 +99,7 @@ function playRound(b,a) {
     else if (a==="paper"&&b=="scissors") {
         humanScore++;
         resultDiv.textContent =  "You win! Scissors beats paper!";
+        winbeat.play();
         tallyScore()
 
     }
@@ -99,6 +108,7 @@ function playRound(b,a) {
     else if (a==="scissors"&&b=="rock") {
         humanScore++;
         resultDiv.textContent =  "You win! Rock beats scissors!";
+        winbeat.play();
         tallyScore()
 
     }
@@ -107,6 +117,7 @@ function playRound(b,a) {
     else if (a==="scissors"&&b=="paper") {
         computerScore++;
         resultDiv.textContent =  "You lose! Scissors beats paper";
+        beat.play();
         tallyScore()
     }
 }
@@ -117,8 +128,11 @@ function tallyScore() {
 
     if (humanScore===5) {
         resultDiv.textContent = "Game Over. You win!"
+        disableButtons();
+        gamewin.play();
     } else if (computerScore===5) {
         resultDiv.textContent = "Game Over. Computer wins!"
+        disableButtons();
     }
 }
 
@@ -126,11 +140,21 @@ function resetGame() {
     resultDiv.textContent = "Begin";
     humanScore = 0;
     computerScore =0;
-    human.textContent = humanScore;
-    computer.textContent = computerScore;
-    
+    human.textContent = "Your score: " + humanScore;
+    computer.textContent = "Computer score: " + computerScore;
+    paperBtn.disabled = false;
+    rockBtn.disabled =false;
+    scissorsBtn.disabled = false;
+    compRock.style.border = "5px solid black";
+    compPaper.style.border = "5px solid black";
+    compScissors.style.border = "5px solid black";
 }
 
+function disableButtons() {
+    paperBtn.disabled = true;
+    rockBtn.disabled =true;
+    scissorsBtn.disabled = true;
+}
 
 
 rockBtn.addEventListener('click', selectRock );
