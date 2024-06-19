@@ -6,16 +6,21 @@ let computerScore = 0
 const rockBtn = document.querySelector("#rock");
 const paperBtn = document.querySelector("#paper");
 const scissorsBtn = document.querySelector("#scissors");
-const resultDiv = document.createElement("div");
-const human = document.createElement("div");
-const computer= document.createElement("div");
-
+const resultDiv = document.querySelector("#score");
+const human = document.querySelector("#humanscore");
+const computer= document.querySelector("#compscore");
+const resetBtn = document.querySelector("#reset");
+const compRock = document.querySelector("#comp-rock");
+const compPaper = document.querySelector("#comp-paper");
+const compScissors = document.querySelector("#comp-scissors");
 
 resultDiv.textContent="Begin"
 resultDiv.style.padding="20px"
-document.body.appendChild(resultDiv);
-document.body.appendChild(human);
-document.body.appendChild(computer);
+
+human.textContent = "Your score: " + humanScore;
+human.style.padding = "20px"
+computer.textContent = "Computer score: " + computerScore;
+computer.style.padding = "20px"
 
 
 
@@ -23,22 +28,32 @@ function getComputerChoice() {
     let comp_choice = Math.floor(Math.random()*3)+1
     if (comp_choice===1) {
         // console.log("rock") // for testing early wins 
+        compRock.style.border = "10px solid green";
+        compPaper.style.border = "5px solid black";
+        compScissors.style.border = "5px solid black";
+        
         return "rock"
     } else if (comp_choice===2) {
         // console.log("paper")// for testing early wins 
+        compRock.style.border = "5px solid black";
+        compPaper.style.border = "10px solid green";
+        compScissors.style.border = "5px solid black";
         return "paper"
     } else {
         // console.log("scissors")// for testing early wins 
+        compRock.style.border = "5px solid black";
+        compPaper.style.border = "5px solid black";
+        compScissors.style.border = "10px solid green";
+        
         return "scissors"
     }
 }
 
-function playRound(a,b) {
+function playRound(b,a) {
     // a will be computer choice
     a = a.toLowerCase()
     // b will be human choice
     b = b.toLowerCase()
-    
 
     // if a and b are same, match draw
     // match draw
@@ -97,21 +112,23 @@ function playRound(a,b) {
 }
 
 function tallyScore() {
-    human.textContent = humanScore;
-    computer.textContent = computerScore;
+    human.textContent = "Your score: " + humanScore;
+    computer.textContent = "Computer score: " + computerScore;
 
     if (humanScore===5) {
-        resultDiv.textContent = "Game Over. You win! Click any button to continue playing."
-        resetGame()
+        resultDiv.textContent = "Game Over. You win!"
     } else if (computerScore===5) {
-        resultDiv.textContent = "Game Over. Computer wins!  Click any button to continue playing."
-        resetGame()
+        resultDiv.textContent = "Game Over. Computer wins!"
     }
 }
 
 function resetGame() {
+    resultDiv.textContent = "Begin";
     humanScore = 0;
     computerScore =0;
+    human.textContent = humanScore;
+    computer.textContent = computerScore;
+    
 }
 
 
@@ -119,6 +136,7 @@ function resetGame() {
 rockBtn.addEventListener('click', selectRock );
 paperBtn.addEventListener('click', selectPaper);
 scissorsBtn.addEventListener('click',selectScissors);
+resetBtn.addEventListener('click',resetGame);
 
 function selectRock() {
     playRound("rock", getComputerChoice());
