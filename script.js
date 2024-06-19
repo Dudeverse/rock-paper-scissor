@@ -3,6 +3,13 @@ console.log("---------------------Hello Let's play rock paper scissors!---------
 let humanScore = 0
 let computerScore = 0
 
+const rockBtn = document.querySelector("#rock");
+const paperBtn = document.querySelector("#paper");
+const scissorsBtn = document.querySelector("#scissors");
+const resultDiv = document.createElement("div");
+resultDiv.textContent="Begin"
+resultDiv.style.padding="20px"
+document.body.appendChild(resultDiv);
 
 
 function getComputerChoice() {
@@ -19,21 +26,6 @@ function getComputerChoice() {
     }
 }
 
-
-
-function getHumanChoice() {
-    let human_choice = prompt("Rock, paper, or scissors?: ")
-    hc = human_choice.toLowerCase();
-
-    //check to see if human entered the word correctly, else prompt again.
-    if (hc==="rock"|| hc==="paper"||hc==="scissors") {
-        return human_choice;
-    } else {
-        return getHumanChoice()
-    }
-    
-}
-
 function playRound(a,b) {
     // a will be computer choice
     a = a.toLowerCase()
@@ -44,105 +36,64 @@ function playRound(a,b) {
     // if a and b are same, match draw
     // match draw
     if (a===b) {
-        alert("Match draw!")
-        console.log("Match draw!")
+        // alert("Match draw!")
+        resultDiv.textContent =  "Match draw!";
+
     }
     
     // if a is rock, b is paper
     // a loses, b wins, you win
     else if (a==="rock"&&b==="paper"){
         humanScore++;
-        console.log("You win! Paper beats rock!")
+        resultDiv.textContent =  "You win! Paper beats rock!";
     }    
     // if a is rock, b is scissors
     // a wins, you lose
     else if (a==="rock"&&b=="scissors") {
         computerScore++;
-        console.log("You lose! Rock beats scissors!")
+        resultDiv.textContent =  "You lose! Rock beats scissors!";
 
     }
     // if a is paper, b is rock
     // a wins, you lose
     else if (a==="paper"&&b=="rock") {
         computerScore++;
-        console.log("You lose! Paper beats rock!")
+        resultDiv.textContent =  "You lose! Paper beats rock!";
     }
     // if a is paper, b is scissors
     // b wins, you win
     else if (a==="paper"&&b=="scissors") {
         humanScore++;
-        console.log("You win! Scissors beats paper!")
+        resultDiv.textContent =  "You win! Scissors beats paper!";
     }
     // if a is scissors, b is rock
     // b wins, you win
     else if (a==="scissors"&&b=="rock") {
         humanScore++;
-        console.log("You win! Rock beats scissors!")
+        resultDiv.textContent =  "You win! Rock beats scissors!";
     }
     // if a is scissors, b is paper
     // a wins, you lose
     else if (a==="scissors"&&b=="paper") {
         computerScore++;
-        console.log("You lose! Scissors beats paper")
+        resultDiv.textContent =  "You lose! Scissors beats paper";
     }
 }
 
-function earlyWinCheck () {
-    let isEarlyWin=false;
 
-    if (computerScore===3){ // if computer scores 3 first
-        isEarlyWin=true;
-        alert("You lost the game")
-        return isEarlyWin;
-    } else if (humanScore===3){ // if human scores 3 first
-        isEarlyWin=true;
-        alert("You won the game")
-        return isEarlyWin;
-    } else {
-        isEarlyWin=false;
-        return isEarlyWin;
-    }
+rockBtn.addEventListener('click', selectRock );
+paperBtn.addEventListener('click', selectPaper);
+scissorsBtn.addEventListener('click',selectScissors);
+
+function selectRock() {
+    playRound("rock", getComputerChoice());
 }
-
-function playGame() {
-    console.log("Round-1: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
-
-    console.log("Round-2: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
-
-    console.log("Round-3: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
     
-    // a chance that game might be finished by round - 3
-    if (earlyWinCheck()) {
-        return 
-    } 
-
-    console.log("Round-4: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
-    // a chance that game might be finished by round - 4
-    if (earlyWinCheck()) {
-        return
-    } 
-    
-    console.log("Round-5: Fight!")
-    playRound(getComputerChoice(),getHumanChoice())
-    alert("------------------Score so far: Computer: " + computerScore+ " You: " + humanScore)
-
-
-    // tally scores and declare result
-    if(humanScore > computerScore) {
-        alert("You won the game!")
-    } else if (humanScore < computerScore) {
-        alert("You lost the game")
-    } else {
-        alert("Game draw!")
-    }
+function selectPaper() {
+    playRound("paper", getComputerChoice());
+}
+function selectScissors() {
+    playRound("scissors", getComputerChoice());
 }
 
-playGame()
+
